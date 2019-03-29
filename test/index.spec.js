@@ -1,5 +1,5 @@
-import ExamplePlugin from '../src';
-const instance = new ExamplePlugin();
+import DataGeneratorPlugin from '../src';
+const instance = new DataGeneratorPlugin();
 
 test('it has a name', () => {
   expect(typeof instance.pluginName).toBe('string');

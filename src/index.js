@@ -3,21 +3,21 @@ import "./figma-plugin-ui.scss";
 import h from "vhtml";
 import { getDomNode, createHtmlNodes } from "./utils";
 
-export default class ExamplePlugin {
+export default class DataGeneratorPlugin {
   constructor() {
-    this.pluginName = "Example Plugin";
+    this.pluginName = "Data Generator Plugin";
 
     // SETUP PLUGIN
     const shortcut = {
       mac: {
-        option: true,
+        command: true,
         shift: true,
-        key: "H"
+        key: "G"
       },
       windows: {
         alt: true,
         shift: true,
-        key: "H"
+        key: "G"
       }
     };
 
@@ -75,7 +75,7 @@ export default class ExamplePlugin {
             <label for="select2">Select with wrapper</label>
             <div class="select">
               <select id="select2">
-                <option>First</option>
+                <option>First TEST TEST</option>
                 <option>Second</option>
                 <option>Third</option>
               </select>
@@ -154,4 +154,4 @@ export default class ExamplePlugin {
   };
 }
 
-window.examplePlugin = new ExamplePlugin();
+window.dataGeneratorPlugin = new DataGeneratorPlugin();
