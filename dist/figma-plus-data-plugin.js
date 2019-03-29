@@ -128,9 +128,6 @@
       ["#select1", "#select2"].map(function (id) {
         return getDomNode(id).addEventListener("change", _this.onInteract);
       });
-      ["#button1", "#button2", "#button3", "#button4", "#button-secondary", "#button-primary"].map(function (id) {
-        return getDomNode(id).addEventListener("click", _this.onInteract);
-      });
     });
 
     defineProperty(this, "showUI", function () {
@@ -142,7 +139,7 @@
         // it's just plain ol javascript.
 
         _this.attachEvents();
-      }, 460, 600, 0.5, 0.5, false, false);
+      }, 400, 400, 0.5, 0.5, false, false);
     });
 
     defineProperty(this, "onInteract", function (event) {
@@ -230,12 +227,7 @@
       id: "button3"
     }, "Button 3"), vhtml("button", {
       id: "button4"
-    }, "Button 4"))), vhtml("footer", null, vhtml("button", {
-      id: "button-secondary"
-    }, "Secondary"), vhtml("button", {
-      id: "button-primary",
-      class: "primary"
-    }, "Primary")));
+    }, "Button 4"))));
   };
   window.dataGeneratorPlugin = new DataGeneratorPlugin();
 

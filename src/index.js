@@ -90,12 +90,6 @@ export default class DataGeneratorPlugin {
             <button id="button4">Button 4</button>
           </div>
         </div>
-        <footer>
-          <button id="button-secondary">Secondary</button>
-          <button id="button-primary" class="primary">
-            Primary
-          </button>
-        </footer>
       </div>
     );
   }
@@ -111,15 +105,6 @@ export default class DataGeneratorPlugin {
     ["#select1", "#select2"].map(id =>
       getDomNode(id).addEventListener("change", this.onInteract)
     );
-
-    [
-      "#button1",
-      "#button2",
-      "#button3",
-      "#button4",
-      "#button-secondary",
-      "#button-primary"
-    ].map(id => getDomNode(id).addEventListener("click", this.onInteract));
   };
 
   showUI = () => {
@@ -136,8 +121,8 @@ export default class DataGeneratorPlugin {
 
         this.attachEvents();
       },
-      460,
-      600,
+      400,
+      400,
       0.5,
       0.5,
       false,
