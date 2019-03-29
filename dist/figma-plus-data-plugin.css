@@ -9,6 +9,13 @@
   flex-basis: calc(100% - 66px);
   overflow-y: scroll;
 }
+.figma-plugin-ui .container {
+  padding: 24px;
+  flex-basis: calc(100% - 66px);
+}
+.figma-plugin-ui .container h2 {
+  cursor: pointer;
+}
 .figma-plugin-ui .empty {
   background-color: #fff;
   text-align: center;
@@ -21,6 +28,7 @@
   font-weight: 400;
   margin: 0;
   padding: 0;
+  cursor: pointer;
 }
 .figma-plugin-ui .empty p {
   font-size: 11px;

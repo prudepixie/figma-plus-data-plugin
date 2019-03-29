@@ -2,6 +2,8 @@
 import "./figma-plugin-ui.scss";
 import h from "vhtml";
 import { getDomNode, createHtmlNodes } from "./utils";
+import { textTransform } from "text-transform";
+import { getContentTypeData } from "./service";
 
 export default class DataGeneratorPlugin {
   constructor() {
@@ -31,80 +33,32 @@ export default class DataGeneratorPlugin {
 
     this.UI = (
       <div class="figma-plugin-ui">
-        <div class="scrollable">
-          <h2>Section 1</h2>
-
-          <div class="field">
-            <label for="input1">Label</label>
-            <input id="input1" type="text" />
-            <p>
-              Help text for input, explain what's the behavior of this input
-              field.
-            </p>
-          </div>
-
-          <h2>Section 2</h2>
-
-          <div class="field-row">
-            <label for="input2">Label</label>
-            <input id="input2" type="text" />
-          </div>
-
-          <div class="field-row">
-            <label for="input3">Label</label>
-            <input id="input3" type="text" />
-          </div>
-
-          <div class="field-row">
-            <label for="input4">Label</label>
-            <input id="input4" type="text" />
-          </div>
-
-          <h2>Section 3</h2>
-
-          <div class="field">
-            <label for="select1">Select</label>
-            <select id="select1">
-              <option>First</option>
-              <option>Second</option>
-              <option>Third</option>
-            </select>
-          </div>
-
-          <div class="field">
-            <label for="select2">Select with wrapper</label>
-            <div class="select">
-              <select id="select2">
-                <option>First TEST TEST</option>
-                <option>Second</option>
-                <option>Third</option>
-              </select>
-            </div>
-          </div>
-
-          <h2>Section 3</h2>
-          <div class="field-row">
-            <button id="button1">Button 1</button>
-            <button id="button2">Button 2</button>
-            <button id="button3">Button 3</button>
-            <button id="button4">Button 4</button>
-          </div>
+        <div class="container">
+          <p>(choose content type to replace in layer)</p>
+          <h2 id="names">Names</h2>
+          <h2 id="usernames">Usernames</h2>
+          <h2 id="email">Email</h2>
+          <h2 id="countries">Countries</h2>
+          <h2 id="addresses">Addresses</h2>
         </div>
       </div>
     );
   }
 
   attachEvents = () => {
-    // No need to removeEventListeners because
-    // the hideUI removes your plugin from the DOM.
-
-    ["#input1", "#input2", "#input3", "#input4"].map(id =>
-      getDomNode(id).addEventListener("input", this.onInteract)
+    ["#names"].map(id =>
+      getDomNode(id).addEventListener("input", this.toggleOptionsPanel)
     );
 
-    ["#select1", "#select2"].map(id =>
-      getDomNode(id).addEventListener("change", this.onInteract)
+    ["#usernames", "#email", "#countries", "#addresses"].map(id =>
+      getDomNode(id).addEventListener("click", () =>
+        this.getContentTypeList(id)
+      )
     );
+
+    // ["#select1", "#select2"].map(id =>
+    //   getDomNode(id).addEventListener("change", this.onInteract)
+    // );
   };
 
   showUI = () => {
@@ -114,15 +68,10 @@ export default class DataGeneratorPlugin {
       modalElement => {
         const htmlNodes = createHtmlNodes(this.UI);
         modalElement.parentNode.replaceChild(htmlNodes, modalElement);
-
-        // Hookup onInteract to handle all UI events.
-        // You can also use a separate handler for each UI element..
-        // it's just plain ol javascript.
-
         this.attachEvents();
       },
-      400,
-      400,
+      300,
+      300,
       0.5,
       0.5,
       false,
@@ -130,11 +79,59 @@ export default class DataGeneratorPlugin {
     );
   };
 
-  onInteract = event => {
-    console.log(event.target.id, event);
+  toggleOptionsPanel = () => {};
 
-    if (event.target.id === "button-primary") {
-      window.figmaPlus.hideUI(this.pluginName);
+  getContentTypeList = async id => {
+    event.stopImmediatePropagation();
+    const selectedNodes = Object.keys(
+      window.App._state.mirror.sceneGraphSelection
+    );
+    if (selectedNodes.length === 0) {
+      figmaPlus.showToast("⚠️ You must select at least one layer.");
+      return;
+    }
+
+    await getContentTypeData(id, selectedNodes.length).then(async items => {
+      let filteredItems;
+
+      switch (id) {
+        case "#names":
+          filteredItems = items.map(item =>
+            textTransform(`${item.name.first} ${item.name.last}`, "capitalize")
+          );
+          break;
+        case "#email":
+          filteredItems = items.map(item => item.email);
+          break;
+        case "#countries":
+          filteredItems = items.map(
+            item => `${textTransform(item.location.city, "capitalize")}`
+          );
+          break;
+        case "#usernames":
+          filteredItems = items.map(item => item.login.username);
+          break;
+        case "#addresses":
+          filteredItems = items.map(
+            item =>
+              `${item.location.street}, ${item.location.city}, ${
+                item.location.state
+              }, ${item.location.postcode} `
+          );
+          break;
+        default:
+          break;
+      }
+      await this.setLayersText(selectedNodes, filteredItems);
+    });
+  };
+
+  setLayersText = (selectedNodes, filteredItems) => {
+    for (const [index, nodeId] of selectedNodes.entries()) {
+      const node = window.figmaPlus.scene.getNodeById(nodeId);
+      if (node.type === "TEXT") {
+        node.characters = filteredItems[index];
+      }
     }
   };
 }

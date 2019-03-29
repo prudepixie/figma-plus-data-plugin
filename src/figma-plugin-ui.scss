@@ -9,6 +9,14 @@
     overflow-y: scroll;
   }
 
+  .container {
+    padding: 24px;
+    flex-basis: calc(100% - 66px);
+    h2 {
+      cursor: pointer;
+    }
+  }
+
   .empty {
     background-color: #fff;
     text-align: center;
@@ -21,6 +29,7 @@
       font-weight: 400;
       margin: 0;
       padding: 0;
+      cursor: pointer;
     }
 
     p {
