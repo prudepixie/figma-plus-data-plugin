@@ -1245,11 +1245,27 @@
       class: "figma-plugin-ui"
     }, vhtml("div", {
       class: "container"
-    }, vhtml("p", null, "(choose content type to replace in layer)"), vhtml("h2", {
+    }, vhtml("p", null, "(choose content type to replace in selected layers)"), vhtml("div", {
+      class: "panel-container"
+    }, vhtml("h2", {
       id: "names"
-    }, "Names"), vhtml("h2", {
+    }, "Names"), vhtml("span", {
+      class: "icon-container"
+    }, vhtml("span", {
+      class: "gc8874076"
+    })), vhtml("div", {
+      class: "toggle-panel"
+    }, vhtml("label", {
+      for: "selectGender"
+    }, "Gender"), vhtml("div", {
+      class: "select"
+    }, vhtml("select", {
+      id: "selectGender"
+    }, vhtml("option", null, "male"), vhtml("option", null, "female"), vhtml("option", null, "both"))))), vhtml("div", {
+      class: "type-container"
+    }, vhtml("h2", {
       id: "usernames"
-    }, "Usernames"), vhtml("h2", {
+    }, "Usernames")), vhtml("h2", {
       id: "email"
     }, "Email"), vhtml("h2", {
       id: "countries"

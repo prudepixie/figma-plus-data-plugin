@@ -34,9 +34,27 @@ export default class DataGeneratorPlugin {
     this.UI = (
       <div class="figma-plugin-ui">
         <div class="container">
-          <p>(choose content type to replace in layer)</p>
-          <h2 id="names">Names</h2>
-          <h2 id="usernames">Usernames</h2>
+          <p>(choose content type to replace in selected layers)</p>
+          <div class="panel-container">
+            <h2 id="names">Names</h2>
+            <span class="icon-container">
+              <span class="gc8874076" />
+            </span>
+            <div class="toggle-panel">
+              <label for="selectGender">Gender</label>
+              <div class="select">
+                <select id="selectGender">
+                  <option>male</option>
+                  <option>female</option>
+                  <option>both</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <div class="type-container">
+            <h2 id="usernames">Usernames</h2>
+          </div>
           <h2 id="email">Email</h2>
           <h2 id="countries">Countries</h2>
           <h2 id="addresses">Addresses</h2>

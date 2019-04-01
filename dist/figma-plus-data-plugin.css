@@ -13,8 +13,23 @@
   padding: 24px;
   flex-basis: calc(100% - 66px);
 }
-.figma-plugin-ui .container h2 {
+.figma-plugin-ui .container .type-container {
   cursor: pointer;
+  padding: 5px;
+}
+.figma-plugin-ui .container .type-container:hover {
+  background: white;
+}
+.figma-plugin-ui .container .panel-container {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0px;
+}
+.figma-plugin-ui .container .panel-container h2 {
+  margin-bottom: 0;
+}
+.figma-plugin-ui .container .panel-container .toggle-panel {
+  display: none;
 }
 .figma-plugin-ui .empty {
   background-color: #fff;

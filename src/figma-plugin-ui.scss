@@ -12,8 +12,25 @@
   .container {
     padding: 24px;
     flex-basis: calc(100% - 66px);
-    h2 {
+    .type-container {
       cursor: pointer;
+      padding: 5px;
+      &:hover {
+        background: white;
+      }
+    }
+    .panel-container {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 0px;
+      h2 {
+        margin-bottom: 0;
+      }
+      .icon-container {
+      }
+      .toggle-panel {
+        display: none;
+      }
     }
   }
 
